@@ -8,6 +8,37 @@ app.get("/api/clientes", (req, res) => {
     res.status(200).json({ success: true, data: clientes})
 })
 
+app.post("/api/clientes", (req, res) => {
+    const {dni} = req.body
+    const {apellidos} = req.body
+    const {nombres} = req.body
+    const {edad} = req.body
+    if(!dni) {
+        return res
+            .status(400)
+            .json({ success:false, msg: "Proveer DNI"})
+    }
+    res.status(201).send( {success: true, data: [...clientes, dni]})
+    if(!apellidos) {
+        return res
+            .status(400)
+            .json({ success:false, msg: "Proveer apellidos"})
+    }
+    res.status(201).send( {success: true, data: [...clientes, apellidos]})
+    if(!nombres) {
+        return res
+            .status(400)
+            .json({ success:false, msg: "Proveer nombres"})
+    }
+    res.status(201).send( {success: true, data: [...clientes, nombres]})
+    if(!edad) {
+        return res
+            .status(400)
+            .json({ success:false, msg: "Proveer edad"})
+    }
+    res.status(201).send( {success: true, data: [...clientes, edad]})
+})
+
 app.put("/api/clientes/:id", (req, res) => {
     const {id} = req.params
     const {dni} = req.body
@@ -31,6 +62,7 @@ app.put("/api/clientes/:id", (req, res) => {
         })
         res.status(201).send( { success: true, data: newClientes})
 })
+
 app.delete('/api/clientes/:id', (req, res) => {
     const {id}=req.params
     const cliente = clientes.find((cliente) => cliente.id === Number(id))

@@ -31,7 +31,17 @@ app.put("/api/clientes/:id", (req, res) => {
         })
         res.status(201).send( { success: true, data: newClientes})
 })
-
+app.delete('/api/clientes/:id', (req, res) => {
+    const {id}=req.params
+    const cliente = clientes.find((cliente) => cliente.id === Number(id))
+    if (!cliente){
+        return res
+        .status (404)
+        .json({success: false, msg: `no persona con id: ${id}`})
+    }
+    const newClientes = clientes.filter(cliente => cliente.id !== Number(id))
+    return res.status(201).send( {success: true, data: newClientes})
+})
 app.listen(5100, () => {
     console.log("Server está en el puerto 5100")
     })

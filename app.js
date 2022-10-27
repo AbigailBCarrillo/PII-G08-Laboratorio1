@@ -8,21 +8,18 @@ app.get('/',(req, res) => {
     res.send('<h1>PAGINA PRINCIPAL </h1> <a href = "/api/client">Clientes</a>')
   })
 
-var a = ''
-for (let i=1; i<clientes.length + 1; i++){
-    var beta = `<a href = "/api/client/${i}">ID: ${i}</a> <br>`
-    a += beta
-}   
-//console.log(a);
-
-const nombre = '<h1>Eliga el ID deseado </h1>' + a
-//console.log(nombre);
-
 app.get('/api/Client',(req, res) => {
-res.send(nombre)
+    var a = ''
+    for (let i=1; i<clientes.length + 1; i++){
+        var beta = `<a href = "/api/client/${i}">ID: ${i}</a> <br>`
+        a += beta
+    }
+
+    var nombre = '<h1>Eliga el ID deseado </h1>' + a
+    res.send(nombre)
 })
 
-app.get('/api/Client/:ClientID',(req, res) => {  // productID : parametro router
+app.get('/api/Client/:ClientID',(req, res) => {
     console.log(req.params);  
     const {ClientID} = req.params
     const singleProduct = clientes.find(
@@ -33,7 +30,7 @@ app.get('/api/Client/:ClientID',(req, res) => {  // productID : parametro router
     res.json(singleProduct) 
   })
 
-app.post("/api/Client/:id", (req, res) => {
+app.post("/api/Client", (req, res) => {
     const {id, dni, apellidos, nombres, edad} = req.body
 
     if(!id || !dni || !apellidos || !nombres || !edad) {
@@ -48,7 +45,7 @@ app.post("/api/Client/:id", (req, res) => {
         edad
     }
     clientes.push(newcliente)
-    res.status(201).json({ success: true, data: newcliente})
+    res.status(201).json({ success: true, data: clientes})
 })
 
 app.put("/api/Client/:id", (req, res) => {
@@ -72,7 +69,7 @@ app.put("/api/Client/:id", (req, res) => {
         }
         return cliente
         })
-        res.status(201).send( { success: true, data: clientes})
+        res.status(201).send( { success: true, data: newClientes})
 })
 
 app.delete('/api/Client/:id', (req, res) => {
@@ -87,6 +84,7 @@ app.delete('/api/Client/:id', (req, res) => {
     clientes = newClientes
     return res.status(201).send( {success: true, data: clientes})
 })
+
 app.listen(5100, () => {
     console.log("Server está en el puerto 5100")
     })

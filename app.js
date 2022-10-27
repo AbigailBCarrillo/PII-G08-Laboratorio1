@@ -33,7 +33,7 @@ app.get('/api/Client/:ClientID',(req, res) => {  // productID : parametro router
     res.json(singleProduct) 
   })
 
-app.post("/api/clientes", (req, res) => {
+app.post("/api/Client", (req, res) => {
     const {dni, apellidos, nombres, edad} = req.body
     if(!dni || !apellidos || !nombres || !edad) {
         res.status(400).send("Proveer datos")
@@ -49,7 +49,7 @@ app.post("/api/clientes", (req, res) => {
     res.status(201).json({ success: true, data: clientes})
 })
 
-app.put("/api/clientes/:id", (req, res) => {
+app.put("/api/Client/:id", (req, res) => {
     const {id} = req.params
     const {dni} = req.body
     const {apellidos} = req.body
@@ -73,7 +73,7 @@ app.put("/api/clientes/:id", (req, res) => {
         res.status(201).send( { success: true, data: newClientes})
 })
 
-app.delete('/api/clientes/:id', (req, res) => {
+app.delete('/api/Client/:id', (req, res) => {
     const {id}=req.params
     const cliente = clientes.find((cliente) => cliente.id === Number(id))
     if (!cliente){

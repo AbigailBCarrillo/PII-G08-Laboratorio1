@@ -4,9 +4,34 @@ const app = express()
 let {clientes} = require("./data")
 app.use(express.json())
 
-app.get("/api/clientes", (req, res) => {
-    res.status(200).json({ success: true, data: clientes})
+app.get('/',(req, res) => {
+    res.send('<h1>PAGINA PRINCIPAL </h1> <a href = "/api/client">Clientes</a>')
+  })
+
+var a = ''
+for (let i=1; i<clientes.length + 1; i++){
+    var beta = `<a href = "/api/client/${i}">ID: ${i}</a> <br>`
+    a += beta
+}   
+//console.log(a);
+
+const nombre = '<h1>Eliga el ID deseado </h1>' + a
+//console.log(nombre);
+
+app.get('/api/Client',(req, res) => {
+res.send(nombre)
 })
+
+app.get('/api/Client/:ClientID',(req, res) => {  // productID : parametro router
+    console.log(req.params);  
+    const {ClientID} = req.params
+    const singleProduct = clientes.find(
+      clientes => clientes.id === Number(ClientID))
+    if(!singleProduct){
+      return res.status(404).send('Cliente no encontrado')
+    }
+    res.json(singleProduct) 
+  })
 
 app.post("/api/clientes", (req, res) => {
     const {dni} = req.body

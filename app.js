@@ -41,13 +41,14 @@ app.post("/api/Client/:id", (req, res) => {
         return
     }
     let newcliente = {
+        id,
         dni,
         apellidos,
         nombres,
         edad
     }
     clientes.push(newcliente)
-    res.status(201).json({ success: true, data: clientes})
+    res.status(201).json({ success: true, data: newcliente})
 })
 
 app.put("/api/Client/:id", (req, res) => {

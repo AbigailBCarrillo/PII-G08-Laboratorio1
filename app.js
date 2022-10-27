@@ -34,34 +34,19 @@ app.get('/api/Client/:ClientID',(req, res) => {  // productID : parametro router
   })
 
 app.post("/api/clientes", (req, res) => {
-    const {dni} = req.body
-    const {apellidos} = req.body
-    const {nombres} = req.body
-    const {edad} = req.body
-    if(!dni) {
-        return res
-            .status(400)
-            .json({ success:false, msg: "Proveer DNI"})
+    const {dni, apellidos, nombres, edad} = req.body
+    if(!dni || !apellidos || !nombres || !edad) {
+        res.status(400).send("Proveer datos");
+        return
     }
-    res.status(201).send( {success: true, data: [...clientes, dni]})
-    if(!apellidos) {
-        return res
-            .status(400)
-            .json({ success:false, msg: "Proveer apellidos"})
+    let newcliente = {
+        dni,
+        apellidos,
+        nombres,
+        edad
     }
-    res.status(201).send( {success: true, data: [...clientes, apellidos]})
-    if(!nombres) {
-        return res
-            .status(400)
-            .json({ success:false, msg: "Proveer nombres"})
-    }
-    res.status(201).send( {success: true, data: [...clientes, nombres]})
-    if(!edad) {
-        return res
-            .status(400)
-            .json({ success:false, msg: "Proveer edad"})
-    }
-    res.status(201).send( {success: true, data: [...clientes, edad]})
+    clientes.push(newcliente);
+    res.send("Recibido")
 })
 
 app.put("/api/clientes/:id", (req, res) => {

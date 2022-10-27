@@ -33,9 +33,10 @@ app.get('/api/Client/:ClientID',(req, res) => {  // productID : parametro router
     res.json(singleProduct) 
   })
 
-app.post("/api/Client", (req, res) => {
-    const {dni, apellidos, nombres, edad} = req.body
-    if(!dni || !apellidos || !nombres || !edad) {
+app.post("/api/Client/:id", (req, res) => {
+    const {id, dni, apellidos, nombres, edad} = req.body
+
+    if(!id || !dni || !apellidos || !nombres || !edad) {
         res.status(400).send("Proveer datos")
         return
     }
@@ -45,7 +46,7 @@ app.post("/api/Client", (req, res) => {
         nombres,
         edad
     }
-    clientes.push(newcliente);
+    clientes.push(newcliente)
     res.status(201).json({ success: true, data: clientes})
 })
 

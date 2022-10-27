@@ -72,7 +72,7 @@ app.put("/api/Client/:id", (req, res) => {
         }
         return cliente
         })
-        res.status(201).send( { success: true, data: newClientes})
+        res.status(201).send( { success: true, data: clientes})
 })
 
 app.delete('/api/Client/:id', (req, res) => {
@@ -84,7 +84,8 @@ app.delete('/api/Client/:id', (req, res) => {
         .json({success: false, msg: `no persona con id: ${id}`})
     }
     const newClientes = clientes.filter(cliente => cliente.id !== Number(id))
-    return res.status(201).send( {success: true, data: newClientes})
+    clientes = newClientes
+    return res.status(201).send( {success: true, data: clientes})
 })
 app.listen(5100, () => {
     console.log("Server está en el puerto 5100")
